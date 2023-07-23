@@ -11,7 +11,7 @@ import random
 import zipfile
 import shutil
 
-folder_path = '.\incise_dataset\Train'
+folder_path = '..\incise_dataset\Train'
 # 创建Zip文件
 zip_file_path = "nii_files.zip"
 with zipfile.ZipFile(zip_file_path, "w") as zf:
@@ -101,6 +101,7 @@ def specificity(y_true, y_pred):
 
 # 构建模型文件的绝对路径
 model_dir = os.path.abspath(os.path.join(os.getcwd(), "incise_dataset"))
+st.write(model_dir)
 model_path = os.path.join(model_dir, "model_x1_1.h5")
 # 加载模型
 model = load_model(model_path,custom_objects={'dice_coef':dice_coef,'precision':precision,'dice_coef_necrotic':dice_coef_necrotic,'dice_coef_edema':dice_coef_edema,'dice_coef_enhancing':dice_coef_enhancing,'sensitivity':sensitivity,'specificity':specificity},compile=False)
