@@ -11,3 +11,4 @@ opencv-python==4.7.0.72
 tensorflow==2.4.0
 tensorflow-gpu==2.4.0
 nibabel==5.1.0
+numpy
