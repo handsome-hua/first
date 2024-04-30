@@ -57,40 +57,40 @@ def open_images(current_file):
 
     name = FENLEIMENT_CLASSES[pred[0]]  # 因为是单个文件，所以pred只有单个变量数字
     return name,image
-temp_folders = [r'.\picturewithfenlei\Training\glioma',
-                r'.\picturewithfenlei\Training\meningioma',
-                r'.\picturewithfenlei\Training\notumor',
-                r'.\picturewithfenlei\Training\pituitary']
-# 创建Zip文件
-zip_file_path = "images.zip"
-with zipfile.ZipFile(zip_file_path, "w") as zf:
-    for temp_folder in temp_folders:
-        for foldername, _, filenames in os.walk(temp_folder):
-            filenames = random.sample(filenames, k=3)
-            for filename in filenames:
-                file_path = os.path.join(foldername, filename)
-                rel_path = os.path.relpath(file_path, temp_folder) # 计算相对路径
-                zip_info = zipfile.ZipInfo(rel_path) # zipfile.ZipInfo()函数使用这个相对路径来创建一个与之关联的zipfile.ZipInfo对象,zipfile.ZipInfo对象包含了与文件或目录相关的各种信息.
-                zf.write(file_path, arcname=zip_info.filename)
+# temp_folders = [r'.\picturewithfenlei\Training\glioma',
+#                 r'.\picturewithfenlei\Training\meningioma',
+#                 r'.\picturewithfenlei\Training\notumor',
+#                 r'.\picturewithfenlei\Training\pituitary']
+# # 创建Zip文件
+# zip_file_path = "images.zip"
+# with zipfile.ZipFile(zip_file_path, "w") as zf:
+#     for temp_folder in temp_folders:
+#         for foldername, _, filenames in os.walk(temp_folder):
+#             filenames = random.sample(filenames, k=3)
+#             for filename in filenames:
+#                 file_path = os.path.join(foldername, filename)
+#                 rel_path = os.path.relpath(file_path, temp_folder) # 计算相对路径
+#                 zip_info = zipfile.ZipInfo(rel_path) # zipfile.ZipInfo()函数使用这个相对路径来创建一个与之关联的zipfile.ZipInfo对象,zipfile.ZipInfo对象包含了与文件或目录相关的各种信息.
+#                 zf.write(file_path, arcname=zip_info.filename)
 
-# 读取zip文件为二进制数据
-with open(zip_file_path, 'rb') as f: # 将文件读取为二进制数据就解决了未知文件格式！！
-    bytes = f.read()
+# # 读取zip文件为二进制数据
+# with open(zip_file_path, 'rb') as f: # 将文件读取为二进制数据就解决了未知文件格式！！
+#     bytes = f.read()
 
-# 在Streamlit的download_button函数中，data参数需要的是一个字节流（binary stream）或者文本数据，而不是文件路径。
-# 当你直接传入一个文件路径时，Streamlit并不能正确地将文件内容读入到字节流中，因此在下载后的文件会出现格式错误。
-# 当你使用open函数以二进制模式（'rb'）打开并读取文件后，你得到的是一个字节流，这个字节流是可以被download_button函数正确处理的，因此在下载后的文件就不会有格式错误。
-# 总的来说，这是因为Streamlit的download_button函数设计如此，它需要的是文件的内容（以字节流或文本数据的形式），而不是文件的路径
+# # 在Streamlit的download_button函数中，data参数需要的是一个字节流（binary stream）或者文本数据，而不是文件路径。
+# # 当你直接传入一个文件路径时，Streamlit并不能正确地将文件内容读入到字节流中，因此在下载后的文件会出现格式错误。
+# # 当你使用open函数以二进制模式（'rb'）打开并读取文件后，你得到的是一个字节流，这个字节流是可以被download_button函数正确处理的，因此在下载后的文件就不会有格式错误。
+# # 总的来说，这是因为Streamlit的download_button函数设计如此，它需要的是文件的内容（以字节流或文本数据的形式），而不是文件的路径
 
-# 显示下载按钮
-st.sidebar.download_button(
-    label="Download Images",
-    data=bytes,
-    file_name="images.zip",
-    mime="application/zip"
-)
-# 删除zip文件
-os.remove(zip_file_path)
+# # 显示下载按钮
+# st.sidebar.download_button(
+#     label="Download Images",
+#     data=bytes,
+#     file_name="images.zip",
+#     mime="application/zip"
+# )
+# # 删除zip文件
+# os.remove(zip_file_path)
 
 # 构建模型文件的绝对路径
 model_dir = os.path.abspath(os.path.join(os.getcwd(), "picturewithfenlei"))
