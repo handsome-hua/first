@@ -11,26 +11,26 @@ import random
 import zipfile
 import shutil
 
-folder_path = '.\incise_dataset\Train'
-# 创建Zip文件
-zip_file_path = "nii_files.zip"
-with zipfile.ZipFile(zip_file_path, "w") as zf:
-    paths = random.sample(os.listdir(folder_path), k=3)
-    for path in paths:
-        file_path = os.path.join(folder_path, path)
-        for foldername, _, filenames in os.walk(file_path):
-            for filename in filenames:
-                every_file = os.path.join(foldername, filename)
-                rel_path = os.path.relpath(every_file, foldername)  # 计算相对路径
-                zip_info = zipfile.ZipInfo(rel_path)
-                zf.write(every_file, arcname=zip_info.filename)
-# 读取zip文件为二进制数据
-with open(zip_file_path, 'rb') as f: # 将文件读取为二进制数据就解决了未知文件格式！！
-    bytes = f.read()
-# 显示下载按钮
-st.sidebar.download_button(label="Download NII Files", data=bytes, file_name="nii_files.zip", mime="application/zip")
-# 删除zip文件
-os.remove(zip_file_path)
+# folder_path = '.\incise_dataset\Train'
+# # 创建Zip文件
+# zip_file_path = "nii_files.zip"
+# with zipfile.ZipFile(zip_file_path, "w") as zf:
+#     paths = random.sample(os.listdir(folder_path), k=3)
+#     for path in paths:
+#         file_path = os.path.join(folder_path, path)
+#         for foldername, _, filenames in os.walk(file_path):
+#             for filename in filenames:
+#                 every_file = os.path.join(foldername, filename)
+#                 rel_path = os.path.relpath(every_file, foldername)  # 计算相对路径
+#                 zip_info = zipfile.ZipInfo(rel_path)
+#                 zf.write(every_file, arcname=zip_info.filename)
+# # 读取zip文件为二进制数据
+# with open(zip_file_path, 'rb') as f: # 将文件读取为二进制数据就解决了未知文件格式！！
+#     bytes = f.read()
+# # 显示下载按钮
+# st.sidebar.download_button(label="Download NII Files", data=bytes, file_name="nii_files.zip", mime="application/zip")
+# # 删除zip文件
+# os.remove(zip_file_path)
 
 # 检查session_state中是否存在分割结果（们将其命名为"split_result"）
 if "split_result" not in st.session_state:
